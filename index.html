@@ -64,7 +64,6 @@
             padding: 40px 24px;
         }
 
-        /* Header */
         header {
             text-align: center;
             margin-bottom: 40px;
@@ -126,7 +125,6 @@
             margin: 0 auto 24px;
         }
 
-        /* Summary Stats Bar */
         .stats-bar {
             display: flex;
             justify-content: center;
@@ -169,7 +167,6 @@
             margin-top: 4px;
         }
 
-        /* Filter Tabs */
         .filter-bar {
             display: flex;
             justify-content: center;
@@ -208,7 +205,6 @@
         .filter-btn.growth.active { background: var(--accent-orange); border-color: var(--accent-orange); }
         .filter-btn.customer.active { background: var(--accent-pink); border-color: var(--accent-pink); }
 
-        /* Section Headers */
         .section-header {
             display: flex;
             align-items: center;
@@ -231,7 +227,6 @@
             background: linear-gradient(90deg, var(--border-color), transparent);
         }
 
-        /* Objectives Grid */
         .objectives-section {
             margin-bottom: 48px;
             animation: fadeIn 0.6s ease-out 0.4s both;
@@ -305,7 +300,6 @@
         .badge-growth { background: var(--glow-orange); color: var(--accent-orange); }
         .badge-customer { background: var(--glow-pink); color: var(--accent-pink); }
 
-        /* Status Dropdown */
         .status-dropdown {
             position: relative;
         }
@@ -412,7 +406,6 @@
             line-height: 1.3;
         }
 
-        /* Progress Bar */
         .objective-progress {
             margin-bottom: 16px;
         }
@@ -455,7 +448,6 @@
         .growth .progress-fill { background: linear-gradient(90deg, var(--accent-orange), #ffb347); }
         .customer .progress-fill { background: linear-gradient(90deg, var(--accent-pink), #ff8fb1); }
 
-        /* Key Results List */
         .kr-list {
             list-style: none;
         }
@@ -515,7 +507,6 @@
             opacity: 0.5;
         }
 
-        /* Kooner Spotlight */
         .spotlight-section {
             margin-bottom: 48px;
             animation: fadeIn 0.6s ease-out 0.5s both;
@@ -635,7 +626,6 @@
             letter-spacing: 0.05em;
         }
 
-        /* KPI Section */
         .kpi-section {
             margin-bottom: 48px;
             animation: fadeIn 0.6s ease-out 0.6s both;
@@ -690,7 +680,6 @@
             color: var(--text-secondary);
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 32px 0;
@@ -720,7 +709,6 @@
             border-radius: 50%;
         }
 
-        /* Toast Notification */
         .toast {
             position: fixed;
             bottom: 24px;
@@ -760,7 +748,6 @@
             color: var(--text-primary);
         }
 
-        /* Expand/Collapse */
         .expand-btn {
             display: flex;
             align-items: center;
@@ -799,17 +786,16 @@
         <header>
             <div class="logo-badge">Last Mile Strategy</div>
             <h1>2026 OKR Dashboard</h1>
-            <p class="subtitle">Track progress on strategic objectives across all pillars</p>
+            <p class="subtitle">Strategic frameworks and standards driving operational excellence</p>
         </header>
 
-        <!-- Summary Stats -->
         <div class="stats-bar">
             <div class="stat-item">
                 <div class="stat-value" id="total-objectives">4</div>
                 <div class="stat-label">Objectives</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value" id="total-krs">21</div>
+                <div class="stat-value" id="total-krs">19</div>
                 <div class="stat-label">Key Results</div>
             </div>
             <div class="stat-item">
@@ -822,16 +808,14 @@
             </div>
         </div>
 
-        <!-- Filter Tabs -->
         <div class="filter-bar">
             <button class="filter-btn active" data-filter="all">All Pillars</button>
             <button class="filter-btn financial" data-filter="financial">💰 Financial</button>
-            <button class="filter-btn operational" data-filter="operational">⚙️ Operational</button>
+            <button class="filter-btn operational" data-filter="operational">⚙️ Operational Strategy</button>
             <button class="filter-btn growth" data-filter="growth">📈 Growth</button>
             <button class="filter-btn customer" data-filter="customer">💗 Customer</button>
         </div>
 
-        <!-- Objectives -->
         <section class="objectives-section">
             <div class="section-header">
                 <h2>Objectives & Key Results</h2>
@@ -864,7 +848,7 @@
                             <div class="progress-fill" style="width: 0%"></div>
                         </div>
                     </div>
-                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (4)</button>
+                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (5)</button>
                     <ul class="kr-list">
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-1-1"></div>
@@ -882,13 +866,17 @@
                             <div class="kr-checkbox" data-kr="kr-1-4"></div>
                             <span class="kr-text">Achieve labor cost as % of revenue target at 90% of stations</span>
                         </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-1-5"></div>
+                            <span class="kr-text">Complete 3P services cost analysis and optimize contract terms</span>
+                        </li>
                     </ul>
                 </div>
 
-                <!-- Operational Objective -->
+                <!-- Operational Strategy Objective -->
                 <div class="objective-card operational" data-pillar="operational" data-id="obj-2">
                     <div class="objective-header">
-                        <span class="objective-badge badge-operational">Operational</span>
+                        <span class="objective-badge badge-operational">Operational Strategy</span>
                         <div class="status-dropdown">
                             <button class="status-btn not-started" data-status="not-started">Not Started</button>
                             <div class="status-menu">
@@ -900,7 +888,7 @@
                             </div>
                         </div>
                     </div>
-                    <h3>Achieve Operational Excellence Across All Stations</h3>
+                    <h3>Develop Operational Excellence Framework & Standards</h3>
                     <div class="objective-progress">
                         <div class="progress-header">
                             <span class="progress-label">Progress</span>
@@ -914,27 +902,27 @@
                     <ul class="kr-list">
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-2-1"></div>
-                            <span class="kr-text">Reduce MTTR by 20% from baseline</span>
+                            <span class="kr-text">Define MTTR reduction targets and measurement standards</span>
                         </li>
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-2-2"></div>
-                            <span class="kr-text">Achieve 95%+ PM compliance across all stations</span>
+                            <span class="kr-text">Design proactive PM scheduling framework for DSP revenue growth</span>
                         </li>
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-2-3"></div>
-                            <span class="kr-text">Implement weekly ops review cadence at 100% of stations</span>
+                            <span class="kr-text">Establish weekly ops review playbook and reporting standards</span>
                         </li>
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-2-4"></div>
-                            <span class="kr-text">Launch Leadership KPI Dashboard with 15 key metrics</span>
+                            <span class="kr-text">Develop Leadership KPI Dashboard framework with 15 key metrics</span>
                         </li>
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-2-5"></div>
-                            <span class="kr-text">Complete peak season capacity planning model</span>
+                            <span class="kr-text">Create peak season capacity planning model and guidelines</span>
                         </li>
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-2-6"></div>
-                            <span class="kr-text">Achieve 80%+ employee engagement score</span>
+                            <span class="kr-text">Develop proactive delay communication framework for dispatch execution</span>
                         </li>
                     </ul>
                 </div>
@@ -964,7 +952,7 @@
                             <div class="progress-fill" style="width: 0%"></div>
                         </div>
                     </div>
-                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (5)</button>
+                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (4)</button>
                     <ul class="kr-list">
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-3-1"></div>
@@ -978,10 +966,7 @@
                             <div class="kr-checkbox" data-kr="kr-3-3"></div>
                             <span class="kr-text">Launch DSP Monthly Newsletter with 80%+ open rate</span>
                         </li>
-                        <li class="kr-item">
-                            <div class="kr-checkbox" data-kr="kr-3-4"></div>
-                            <span class="kr-text">Execute 3+ site acquisitions from pipeline</span>
-                        </li>
+
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-3-5"></div>
                             <span class="kr-text">Deploy new station launch playbook and pilot on 2+ stations</span>
@@ -1014,11 +999,11 @@
                             <div class="progress-fill" style="width: 0%"></div>
                         </div>
                     </div>
-                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (6)</button>
+                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (4)</button>
                     <ul class="kr-list">
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-4-1"></div>
-                            <span class="kr-text">Achieve NPS score of 50+ across customer base</span>
+                            <span class="kr-text">Achieve 80%+ satisfaction score via DSP Survey feedback</span>
                         </li>
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-4-2"></div>
@@ -1026,19 +1011,11 @@
                         </li>
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-4-3"></div>
-                            <span class="kr-text">Reduce invoice disputes by 40% from baseline</span>
+                            <span class="kr-text">Achieve 98%+ billing accuracy across all customer invoices</span>
                         </li>
                         <li class="kr-item">
                             <div class="kr-checkbox" data-kr="kr-4-4"></div>
-                            <span class="kr-text">Implement proactive delay communication for 100% of delays</span>
-                        </li>
-                        <li class="kr-item">
-                            <div class="kr-checkbox" data-kr="kr-4-5"></div>
                             <span class="kr-text">Launch standardized customer onboarding playbook</span>
-                        </li>
-                        <li class="kr-item">
-                            <div class="kr-checkbox" data-kr="kr-4-6"></div>
-                            <span class="kr-text">Complete 3P services breakdown and optimize contract terms</span>
                         </li>
                     </ul>
                 </div>
@@ -1046,7 +1023,6 @@
             </div>
         </section>
 
-        <!-- Kooner Spotlight -->
         <section class="spotlight-section">
             <div class="section-header">
                 <h2>Key Initiative Spotlight</h2>
@@ -1087,7 +1063,6 @@
             </div>
         </section>
 
-        <!-- KPIs -->
         <section class="kpi-section">
             <div class="section-header">
                 <h2>Key Performance Indicators</h2>
@@ -1095,14 +1070,14 @@
             </div>
             <div class="kpi-grid">
                 <div class="kpi-card">
-                    <div class="kpi-name">MTTR</div>
-                    <div class="kpi-target">-20%</div>
-                    <div class="kpi-pillar">Operational</div>
+                    <div class="kpi-name">MTTR Standards</div>
+                    <div class="kpi-target">Defined</div>
+                    <div class="kpi-pillar">Ops Strategy</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-name">PM Compliance</div>
-                    <div class="kpi-target">95%+</div>
-                    <div class="kpi-pillar">Operational</div>
+                    <div class="kpi-name">PM Framework</div>
+                    <div class="kpi-target">Deployed</div>
+                    <div class="kpi-pillar">Ops Strategy</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-name">Margin vs Plan</div>
@@ -1110,13 +1085,13 @@
                     <div class="kpi-pillar">Financial</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-name">SLA Performance</div>
-                    <div class="kpi-target">98%</div>
-                    <div class="kpi-pillar">Operational</div>
+                    <div class="kpi-name">Escalation Playbook</div>
+                    <div class="kpi-target">Deployed</div>
+                    <div class="kpi-pillar">Ops Strategy</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-name">NPS Score</div>
-                    <div class="kpi-target">50+</div>
+                    <div class="kpi-name">DSP Satisfaction</div>
+                    <div class="kpi-target">80%+</div>
                     <div class="kpi-pillar">Customer</div>
                 </div>
             </div>
@@ -1124,18 +1099,16 @@
 
         <footer>
             <p>Last Mile Strategy Team | 2026 OKR Dashboard</p>
-            <div class="sync-info">Snapshot as of January 30, 2026</div>
+            <div class="sync-info">Snapshot as of February 3, 2026</div>
         </footer>
     </div>
 
-    <!-- Toast Notification -->
     <div class="toast" id="toast">
         <div class="toast-icon">✓</div>
         <div class="toast-message" id="toast-message">Progress updated!</div>
     </div>
 
     <script>
-        // State management
         let state = {
             objectives: {
                 'obj-1': { status: 'not-started', krs: {} },
@@ -1146,7 +1119,6 @@
             kooner: 35
         };
 
-        // Load state from localStorage
         function loadState() {
             const saved = localStorage.getItem('okr-dashboard-state');
             if (saved) {
@@ -1155,14 +1127,11 @@
             }
         }
 
-        // Save state to localStorage
         function saveState() {
             localStorage.setItem('okr-dashboard-state', JSON.stringify(state));
         }
 
-        // Apply state to UI
         function applyState() {
-            // Apply objective statuses
             Object.keys(state.objectives).forEach(objId => {
                 const obj = state.objectives[objId];
                 const card = document.querySelector(`[data-id="${objId}"]`);
@@ -1170,7 +1139,6 @@
                     const btn = card.querySelector('.status-btn');
                     updateStatusButton(btn, obj.status);
                     
-                    // Apply KR checkboxes
                     Object.keys(obj.krs).forEach(krId => {
                         if (obj.krs[krId]) {
                             const checkbox = card.querySelector(`[data-kr="${krId}"]`);
@@ -1185,14 +1153,10 @@
                 }
             });
 
-            // Apply Kooner progress
             updateKoonerDisplay(state.kooner);
-            
-            // Update overall stats
             updateOverallStats();
         }
 
-        // Update status button appearance
         function updateStatusButton(btn, status) {
             btn.className = 'status-btn ' + status;
             const labels = {
@@ -1205,7 +1169,6 @@
             btn.textContent = labels[status];
         }
 
-        // Update objective progress based on KRs
         function updateObjectiveProgress(card) {
             const checkboxes = card.querySelectorAll('.kr-checkbox');
             const checked = card.querySelectorAll('.kr-checkbox.checked');
@@ -1215,7 +1178,6 @@
             card.querySelector('.progress-fill').style.width = progress + '%';
         }
 
-        // Update overall stats
         function updateOverallStats() {
             const allCheckboxes = document.querySelectorAll('.kr-checkbox');
             const checkedBoxes = document.querySelectorAll('.kr-checkbox.checked');
@@ -1227,7 +1189,6 @@
             document.getElementById('overall-progress').textContent = progress + '%';
         }
 
-        // Update Kooner display
         function updateKoonerDisplay(value) {
             document.getElementById('kooner-fill').style.width = value + '%';
             document.getElementById('kooner-current').textContent = value;
@@ -1235,7 +1196,6 @@
             document.getElementById('kooner-gap').textContent = '+' + (85 - value);
         }
 
-        // Show toast notification
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').textContent = message;
@@ -1243,11 +1203,9 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Initialize event listeners
         document.addEventListener('DOMContentLoaded', function() {
             loadState();
 
-            // Filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -1264,7 +1222,6 @@
                 });
             });
 
-            // Status dropdowns
             document.querySelectorAll('.status-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
@@ -1276,7 +1233,6 @@
                 });
             });
 
-            // Status options
             document.querySelectorAll('.status-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const menu = this.parentElement;
@@ -1294,12 +1250,10 @@
                 });
             });
 
-            // Close dropdowns when clicking outside
             document.addEventListener('click', function() {
                 document.querySelectorAll('.status-menu').forEach(m => m.classList.remove('open'));
             });
 
-            // KR Checkboxes
             document.querySelectorAll('.kr-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('click', function() {
                     this.classList.toggle('checked');
@@ -1321,7 +1275,6 @@
                 });
             });
 
-            // Expand/Collapse buttons
             document.querySelectorAll('.expand-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.classList.toggle('expanded');
@@ -1329,7 +1282,6 @@
                 });
             });
 
-            // Kooner progress bar click to edit
             document.getElementById('kooner-track').addEventListener('click', function(e) {
                 const rect = this.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -1342,7 +1294,6 @@
                 showToast('Kooner adoption updated to ' + clamped + '%');
             });
 
-            // Progress bar click to edit
             document.querySelectorAll('.progress-track').forEach(track => {
                 track.addEventListener('click', function(e) {
                     const rect = this.getBoundingClientRect();
