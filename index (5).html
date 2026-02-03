@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Mile Strategy | 2026 OKR Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-hover: #22222e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --accent-green: #00ff88;
+            --accent-blue: #00d4ff;
+            --accent-orange: #ff9500;
+            --accent-pink: #ff6b9d;
+            --accent-purple: #a855f7;
+            --accent-red: #ff4757;
+            --accent-yellow: #ffc107;
+            --border-color: rgba(255,255,255,0.08);
+            --glow-green: rgba(0,255,136,0.15);
+            --glow-blue: rgba(0,212,255,0.15);
+            --glow-orange: rgba(255,149,0,0.15);
+            --glow-pink: rgba(255,107,157,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 0%, rgba(0,255,136,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,212,255,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 60% at 50% 50%, rgba(168,85,247,0.04) 0%, transparent 50%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .logo-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .stat-value.green { color: var(--accent-green); }
+        .stat-value.blue { color: var(--accent-blue); }
+        .stat-value.orange { color: var(--accent-orange); }
+        .stat-value.pink { color: var(--accent-pink); }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            animation: fadeIn 0.6s ease-out 0.3s both;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            color: var(--text-secondary);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--bg-hover);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .filter-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        .filter-btn.financial.active { background: var(--accent-green); border-color: var(--accent-green); }
+        .filter-btn.operational.active { background: var(--accent-blue); border-color: var(--accent-blue); }
+        .filter-btn.growth.active { background: var(--accent-orange); border-color: var(--accent-orange); }
+        .filter-btn.customer.active { background: var(--accent-pink); border-color: var(--accent-pink); }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border-color), transparent);
+        }
+
+        .objectives-section {
+            margin-bottom: 48px;
+            animation: fadeIn 0.6s ease-out 0.4s both;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .objectives-grid { grid-template-columns: 1fr; }
+        }
+
+        .objective-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .objective-card.hidden {
+            display: none;
+        }
+
+        .objective-card:hover {
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        .objective-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .objective-card.financial::before { background: var(--accent-green); }
+        .objective-card.operational::before { background: var(--accent-blue); }
+        .objective-card.growth::before { background: var(--accent-orange); }
+        .objective-card.customer::before { background: var(--accent-pink); }
+
+        .objective-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .objective-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        .badge-financial { background: var(--glow-green); color: var(--accent-green); }
+        .badge-operational { background: var(--glow-blue); color: var(--accent-blue); }
+        .badge-growth { background: var(--glow-orange); color: var(--accent-orange); }
+        .badge-customer { background: var(--glow-pink); color: var(--accent-pink); }
+
+        .status-dropdown {
+            position: relative;
+        }
+
+        .status-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .status-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .status-btn::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        .status-btn.not-started::before { background: var(--text-muted); }
+        .status-btn.on-track::before { background: var(--accent-green); }
+        .status-btn.at-risk::before { background: var(--accent-yellow); }
+        .status-btn.behind::before { background: var(--accent-red); }
+        .status-btn.completed::before { background: var(--accent-blue); }
+
+        .status-btn::after {
+            content: '▼';
+            font-size: 8px;
+            opacity: 0.5;
+        }
+
+        .status-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 140px;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .status-menu.open {
+            display: block;
+            animation: dropIn 0.2s ease-out;
+        }
+
+        @keyframes dropIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .status-option:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .status-option::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-option.not-started::before { background: var(--text-muted); }
+        .status-option.on-track::before { background: var(--accent-green); }
+        .status-option.at-risk::before { background: var(--accent-yellow); }
+        .status-option.behind::before { background: var(--accent-red); }
+        .status-option.completed::before { background: var(--accent-blue); }
+
+        .objective-card h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .objective-progress {
+            margin-bottom: 16px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .progress-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .progress-track {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 100px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 100px;
+            transition: width 0.5s ease;
+        }
+
+        .financial .progress-fill { background: linear-gradient(90deg, var(--accent-green), #00cc6a); }
+        .operational .progress-fill { background: linear-gradient(90deg, var(--accent-blue), #00a8cc); }
+        .growth .progress-fill { background: linear-gradient(90deg, var(--accent-orange), #ffb347); }
+        .customer .progress-fill { background: linear-gradient(90deg, var(--accent-pink), #ff8fb1); }
+
+        .kr-list {
+            list-style: none;
+        }
+
+        .kr-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-color);
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .kr-item:first-child {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .kr-checkbox {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+
+        .kr-checkbox:hover {
+            border-color: var(--text-muted);
+        }
+
+        .kr-checkbox.checked {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .kr-checkbox.checked::after {
+            content: '✓';
+            color: var(--bg-primary);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .kr-text {
+            flex: 1;
+        }
+
+        .kr-text.completed {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .spotlight-section {
+            margin-bottom: 48px;
+            animation: fadeIn 0.6s ease-out 0.5s both;
+        }
+
+        .spotlight-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255,149,0,0.08) 100%);
+            border: 1px solid rgba(255,149,0,0.2);
+            border-radius: 24px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+        }
+
+        @media (max-width: 800px) {
+            .spotlight-card { grid-template-columns: 1fr; }
+        }
+
+        .spotlight-content h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .spotlight-content h3 span {
+            color: var(--accent-orange);
+        }
+
+        .spotlight-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .kooner-progress {
+            margin-bottom: 8px;
+        }
+
+        .kooner-track {
+            height: 16px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 100px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .kooner-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-orange), #ffcc00);
+            border-radius: 100px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .kooner-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .kooner-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .kooner-labels .current {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        .kooner-labels .target {
+            color: var(--text-secondary);
+        }
+
+        .spotlight-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .metric-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent-orange);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-section {
+            margin-bottom: 48px;
+            animation: fadeIn 0.6s ease-out 0.6s both;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 1024px) {
+            .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+        }
+
+        .kpi-name {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        .kpi-target {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .kpi-pillar {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px 0;
+            border-top: 1px solid var(--border-color);
+            animation: fadeIn 0.6s ease-out 0.7s both;
+        }
+
+        footer p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .sync-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .sync-info::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,255,136,0.2);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .expand-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 0;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .expand-btn:hover {
+            color: var(--text-secondary);
+        }
+
+        .expand-btn .arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .expand-btn.expanded .arrow {
+            transform: rotate(180deg);
+        }
+
+        .kr-list.collapsed {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo-badge">Last Mile Strategy</div>
+            <h1>2026 OKR Dashboard</h1>
+            <p class="subtitle">Strategic frameworks and standards driving operational excellence</p>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="total-objectives">4</div>
+                <div class="stat-label">Objectives</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="total-krs">19</div>
+                <div class="stat-label">Key Results</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value green" id="completed-krs">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value blue" id="overall-progress">0%</div>
+                <div class="stat-label">Progress</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All Pillars</button>
+            <button class="filter-btn financial" data-filter="financial">💰 Financial</button>
+            <button class="filter-btn operational" data-filter="operational">⚙️ Operational Strategy</button>
+            <button class="filter-btn growth" data-filter="growth">📈 Growth</button>
+            <button class="filter-btn customer" data-filter="customer">💗 Customer</button>
+        </div>
+
+        <section class="objectives-section">
+            <div class="section-header">
+                <h2>Objectives & Key Results</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="objectives-grid" id="objectives-grid">
+                
+                <!-- Financial Objective -->
+                <div class="objective-card financial" data-pillar="financial" data-id="obj-1">
+                    <div class="objective-header">
+                        <span class="objective-badge badge-financial">Financial</span>
+                        <div class="status-dropdown">
+                            <button class="status-btn not-started" data-status="not-started">Not Started</button>
+                            <div class="status-menu">
+                                <div class="status-option not-started" data-value="not-started">Not Started</div>
+                                <div class="status-option on-track" data-value="on-track">On Track</div>
+                                <div class="status-option at-risk" data-value="at-risk">At Risk</div>
+                                <div class="status-option behind" data-value="behind">Behind</div>
+                                <div class="status-option completed" data-value="completed">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Maximize Financial Performance & Profitability</h3>
+                    <div class="objective-progress">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress</span>
+                            <span class="progress-value">0%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (5)</button>
+                    <ul class="kr-list">
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-1-1"></div>
+                            <span class="kr-text">Improve margin vs. plan by 5% across all stations</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-1-2"></div>
+                            <span class="kr-text">Deploy monthly financial scorecards to 100% of stations</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-1-3"></div>
+                            <span class="kr-text">Reduce parts & materials spend by 10% through bulk purchasing</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-1-4"></div>
+                            <span class="kr-text">Achieve labor cost as % of revenue target at 90% of stations</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-1-5"></div>
+                            <span class="kr-text">Complete 3P services cost analysis and optimize contract terms</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Operational Strategy Objective -->
+                <div class="objective-card operational" data-pillar="operational" data-id="obj-2">
+                    <div class="objective-header">
+                        <span class="objective-badge badge-operational">Operational Strategy</span>
+                        <div class="status-dropdown">
+                            <button class="status-btn not-started" data-status="not-started">Not Started</button>
+                            <div class="status-menu">
+                                <div class="status-option not-started" data-value="not-started">Not Started</div>
+                                <div class="status-option on-track" data-value="on-track">On Track</div>
+                                <div class="status-option at-risk" data-value="at-risk">At Risk</div>
+                                <div class="status-option behind" data-value="behind">Behind</div>
+                                <div class="status-option completed" data-value="completed">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Develop Operational Excellence Framework & Standards</h3>
+                    <div class="objective-progress">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress</span>
+                            <span class="progress-value">0%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (6)</button>
+                    <ul class="kr-list">
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-2-1"></div>
+                            <span class="kr-text">Define MTTR reduction targets and measurement standards</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-2-2"></div>
+                            <span class="kr-text">Design proactive PM scheduling framework for DSP revenue growth</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-2-3"></div>
+                            <span class="kr-text">Establish weekly ops review playbook and reporting standards</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-2-4"></div>
+                            <span class="kr-text">Develop Leadership KPI Dashboard framework with 15 key metrics</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-2-5"></div>
+                            <span class="kr-text">Create peak season capacity planning model and guidelines</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-2-6"></div>
+                            <span class="kr-text">Develop proactive delay communication framework for dispatch execution</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Growth Objective -->
+                <div class="objective-card growth" data-pillar="growth" data-id="obj-3">
+                    <div class="objective-header">
+                        <span class="objective-badge badge-growth">Growth</span>
+                        <div class="status-dropdown">
+                            <button class="status-btn not-started" data-status="not-started">Not Started</button>
+                            <div class="status-menu">
+                                <div class="status-option not-started" data-value="not-started">Not Started</div>
+                                <div class="status-option on-track" data-value="on-track">On Track</div>
+                                <div class="status-option at-risk" data-value="at-risk">At Risk</div>
+                                <div class="status-option behind" data-value="behind">Behind</div>
+                                <div class="status-option completed" data-value="completed">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Accelerate Growth & Network Expansion</h3>
+                    <div class="objective-progress">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress</span>
+                            <span class="progress-value">0%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (4)</button>
+                    <ul class="kr-list">
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-3-1"></div>
+                            <span class="kr-text">Achieve 85% Kooner adoption across all last mile stations</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-3-2"></div>
+                            <span class="kr-text">Increase DSP network engagement by 25%</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-3-3"></div>
+                            <span class="kr-text">Launch DSP Monthly Newsletter with 80%+ open rate</span>
+                        </li>
+
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-3-5"></div>
+                            <span class="kr-text">Deploy new station launch playbook and pilot on 2+ stations</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Customer Objective -->
+                <div class="objective-card customer" data-pillar="customer" data-id="obj-4">
+                    <div class="objective-header">
+                        <span class="objective-badge badge-customer">Customer</span>
+                        <div class="status-dropdown">
+                            <button class="status-btn not-started" data-status="not-started">Not Started</button>
+                            <div class="status-menu">
+                                <div class="status-option not-started" data-value="not-started">Not Started</div>
+                                <div class="status-option on-track" data-value="on-track">On Track</div>
+                                <div class="status-option at-risk" data-value="at-risk">At Risk</div>
+                                <div class="status-option behind" data-value="behind">Behind</div>
+                                <div class="status-option completed" data-value="completed">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Strengthen Customer Relationships & Satisfaction</h3>
+                    <div class="objective-progress">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress</span>
+                            <span class="progress-value">0%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="expand-btn expanded"><span class="arrow">▼</span> Key Results (4)</button>
+                    <ul class="kr-list">
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-4-1"></div>
+                            <span class="kr-text">Achieve 80%+ satisfaction score via DSP Survey feedback</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-4-2"></div>
+                            <span class="kr-text">Deploy customer health scoring model for top 50 accounts</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-4-3"></div>
+                            <span class="kr-text">Achieve 98%+ billing accuracy across all customer invoices</span>
+                        </li>
+                        <li class="kr-item">
+                            <div class="kr-checkbox" data-kr="kr-4-4"></div>
+                            <span class="kr-text">Launch standardized customer onboarding playbook</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="spotlight-section">
+            <div class="section-header">
+                <h2>Key Initiative Spotlight</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="spotlight-card">
+                <div class="spotlight-content">
+                    <h3><span>Kooner</span> Adoption</h3>
+                    <p>Driving adoption across all last mile stations to improve operational efficiency.</p>
+                    <div class="kooner-progress">
+                        <div class="kooner-track" id="kooner-track">
+                            <div class="kooner-fill" id="kooner-fill" style="width: 35%"></div>
+                        </div>
+                    </div>
+                    <div class="kooner-labels">
+                        <span class="current">Current: <span id="kooner-current">35</span>%</span>
+                        <span class="target">Target: 85%</span>
+                    </div>
+                </div>
+                <div class="spotlight-metrics">
+                    <div class="metric-box">
+                        <div class="metric-value" id="kooner-value">35%</div>
+                        <div class="metric-label">Current</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">85%</div>
+                        <div class="metric-label">Target</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">95%</div>
+                        <div class="metric-label">Stretch</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value" id="kooner-gap">+50</div>
+                        <div class="metric-label">Gap (pts)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="kpi-section">
+            <div class="section-header">
+                <h2>Key Performance Indicators</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-name">MTTR Standards</div>
+                    <div class="kpi-target">Defined</div>
+                    <div class="kpi-pillar">Ops Strategy</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-name">PM Framework</div>
+                    <div class="kpi-target">Deployed</div>
+                    <div class="kpi-pillar">Ops Strategy</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-name">Margin vs Plan</div>
+                    <div class="kpi-target">+5%</div>
+                    <div class="kpi-pillar">Financial</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-name">Escalation Playbook</div>
+                    <div class="kpi-target">Deployed</div>
+                    <div class="kpi-pillar">Ops Strategy</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-name">DSP Satisfaction</div>
+                    <div class="kpi-target">80%+</div>
+                    <div class="kpi-pillar">Customer</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Last Mile Strategy Team | 2026 OKR Dashboard</p>
+            <div class="sync-info">Snapshot as of February 3, 2026</div>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <div class="toast-message" id="toast-message">Progress updated!</div>
+    </div>
+
+    <script>
+        let state = {
+            objectives: {
+                'obj-1': { status: 'not-started', krs: {} },
+                'obj-2': { status: 'not-started', krs: {} },
+                'obj-3': { status: 'not-started', krs: {} },
+                'obj-4': { status: 'not-started', krs: {} }
+            },
+            kooner: 35
+        };
+
+        function loadState() {
+            const saved = localStorage.getItem('okr-dashboard-state');
+            if (saved) {
+                state = JSON.parse(saved);
+                applyState();
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('okr-dashboard-state', JSON.stringify(state));
+        }
+
+        function applyState() {
+            Object.keys(state.objectives).forEach(objId => {
+                const obj = state.objectives[objId];
+                const card = document.querySelector(`[data-id="${objId}"]`);
+                if (card) {
+                    const btn = card.querySelector('.status-btn');
+                    updateStatusButton(btn, obj.status);
+                    
+                    Object.keys(obj.krs).forEach(krId => {
+                        if (obj.krs[krId]) {
+                            const checkbox = card.querySelector(`[data-kr="${krId}"]`);
+                            if (checkbox) {
+                                checkbox.classList.add('checked');
+                                checkbox.nextElementSibling.classList.add('completed');
+                            }
+                        }
+                    });
+                    
+                    updateObjectiveProgress(card);
+                }
+            });
+
+            updateKoonerDisplay(state.kooner);
+            updateOverallStats();
+        }
+
+        function updateStatusButton(btn, status) {
+            btn.className = 'status-btn ' + status;
+            const labels = {
+                'not-started': 'Not Started',
+                'on-track': 'On Track',
+                'at-risk': 'At Risk',
+                'behind': 'Behind',
+                'completed': 'Completed'
+            };
+            btn.textContent = labels[status];
+        }
+
+        function updateObjectiveProgress(card) {
+            const checkboxes = card.querySelectorAll('.kr-checkbox');
+            const checked = card.querySelectorAll('.kr-checkbox.checked');
+            const progress = Math.round((checked.length / checkboxes.length) * 100);
+            
+            card.querySelector('.progress-value').textContent = progress + '%';
+            card.querySelector('.progress-fill').style.width = progress + '%';
+        }
+
+        function updateOverallStats() {
+            const allCheckboxes = document.querySelectorAll('.kr-checkbox');
+            const checkedBoxes = document.querySelectorAll('.kr-checkbox.checked');
+            const completedCount = checkedBoxes.length;
+            const totalKRs = allCheckboxes.length;
+            const progress = Math.round((completedCount / totalKRs) * 100);
+
+            document.getElementById('completed-krs').textContent = completedCount;
+            document.getElementById('overall-progress').textContent = progress + '%';
+        }
+
+        function updateKoonerDisplay(value) {
+            document.getElementById('kooner-fill').style.width = value + '%';
+            document.getElementById('kooner-current').textContent = value;
+            document.getElementById('kooner-value').textContent = value + '%';
+            document.getElementById('kooner-gap').textContent = '+' + (85 - value);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadState();
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.dataset.filter;
+                    document.querySelectorAll('.objective-card').forEach(card => {
+                        if (filter === 'all' || card.dataset.pillar === filter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            document.querySelectorAll('.status-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const menu = this.nextElementSibling;
+                    document.querySelectorAll('.status-menu').forEach(m => {
+                        if (m !== menu) m.classList.remove('open');
+                    });
+                    menu.classList.toggle('open');
+                });
+            });
+
+            document.querySelectorAll('.status-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const menu = this.parentElement;
+                    const btn = menu.previousElementSibling;
+                    const card = this.closest('.objective-card');
+                    const objId = card.dataset.id;
+                    const status = this.dataset.value;
+                    
+                    updateStatusButton(btn, status);
+                    menu.classList.remove('open');
+                    
+                    state.objectives[objId].status = status;
+                    saveState();
+                    showToast('Status updated to ' + this.textContent);
+                });
+            });
+
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.status-menu').forEach(m => m.classList.remove('open'));
+            });
+
+            document.querySelectorAll('.kr-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    this.classList.toggle('checked');
+                    this.nextElementSibling.classList.toggle('completed');
+                    
+                    const card = this.closest('.objective-card');
+                    const objId = card.dataset.id;
+                    const krId = this.dataset.kr;
+                    
+                    state.objectives[objId].krs[krId] = this.classList.contains('checked');
+                    saveState();
+                    
+                    updateObjectiveProgress(card);
+                    updateOverallStats();
+                    
+                    if (this.classList.contains('checked')) {
+                        showToast('Key Result completed! 🎉');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.expand-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                    this.nextElementSibling.classList.toggle('collapsed');
+                });
+            });
+
+            document.getElementById('kooner-track').addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const percentage = Math.round((x / rect.width) * 100);
+                const clamped = Math.max(0, Math.min(100, percentage));
+                
+                state.kooner = clamped;
+                saveState();
+                updateKoonerDisplay(clamped);
+                showToast('Kooner adoption updated to ' + clamped + '%');
+            });
+
+            document.querySelectorAll('.progress-track').forEach(track => {
+                track.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const percentage = Math.round((x / rect.width) * 100);
+                    const clamped = Math.max(0, Math.min(100, percentage));
+                    
+                    const card = this.closest('.objective-card');
+                    card.querySelector('.progress-value').textContent = clamped + '%';
+                    card.querySelector('.progress-fill').style.width = clamped + '%';
+                    
+                    showToast('Progress updated to ' + clamped + '%');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
