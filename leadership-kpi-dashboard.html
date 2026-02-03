@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership KPI Dashboard | Last Mile Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-primary: #0a0a0f; --bg-card: #1a1a24; --text-primary: #ffffff; --text-secondary: #a0a0b0; --text-muted: #606070; --accent-blue: #00d4ff; --accent-green: #00ff88; --accent-yellow: #ffc107; --accent-red: #ff4757; --border-color: rgba(255,255,255,0.08); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; padding: 40px 24px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        header { margin-bottom: 40px; }
+        .breadcrumb { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+        .breadcrumb a { color: var(--accent-blue); text-decoration: none; }
+        h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+        .subtitle { color: var(--text-secondary); font-size: 14px; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 32px; }
+        @media (max-width: 1024px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
+        .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; text-align: center; }
+        .kpi-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+        .kpi-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 800; }
+        .kpi-value.green { color: var(--accent-green); }
+        .kpi-value.blue { color: var(--accent-blue); }
+        .kpi-value.yellow { color: var(--accent-yellow); }
+        .kpi-value.red { color: var(--accent-red); }
+        .kpi-target { font-size: 10px; color: var(--text-secondary); margin-top: 4px; }
+        .section-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; margin: 24px 0 16px; color: var(--text-secondary); }
+        footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border-color); margin-top: 40px; font-size: 12px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="breadcrumb"><a href="index.html">OKR Dashboard</a> / Operational Strategy</div>
+            <h1>⚙️ Leadership KPI Dashboard</h1>
+            <p class="subtitle">15 key metrics framework • Executive-level visibility</p>
+        </header>
+        
+        <div class="section-title">💰 FINANCIAL (5 KPIs)</div>
+        <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-label">Revenue</div><div class="kpi-value">$4.2M</div><div class="kpi-target">MTD</div></div>
+            <div class="kpi-card"><div class="kpi-label">Margin vs Plan</div><div class="kpi-value green">+3.2%</div><div class="kpi-target">Target: +5%</div></div>
+            <div class="kpi-card"><div class="kpi-label">Labor Cost %</div><div class="kpi-value yellow">32.4%</div><div class="kpi-target">Target: 30%</div></div>
+            <div class="kpi-card"><div class="kpi-label">Parts Savings</div><div class="kpi-value green">-6.2%</div><div class="kpi-target">Target: -10%</div></div>
+            <div class="kpi-card"><div class="kpi-label">3P Optimization</div><div class="kpi-value blue">$380K</div><div class="kpi-target">Identified</div></div>
+        </div>
+
+        <div class="section-title">⚙️ OPERATIONAL (5 KPIs)</div>
+        <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-label">MTTR</div><div class="kpi-value green">4.2 hrs</div><div class="kpi-target">-20% vs baseline</div></div>
+            <div class="kpi-card"><div class="kpi-label">PM Compliance</div><div class="kpi-value green">95%</div><div class="kpi-target">Target: 95%</div></div>
+            <div class="kpi-card"><div class="kpi-label">Ops Review</div><div class="kpi-value blue">92%</div><div class="kpi-target">Weekly cadence</div></div>
+            <div class="kpi-card"><div class="kpi-label">Fleet Uptime</div><div class="kpi-value green">97.2%</div><div class="kpi-target">Target: 95%</div></div>
+            <div class="kpi-card"><div class="kpi-label">SLA Performance</div><div class="kpi-value green">98.1%</div><div class="kpi-target">Target: 98%</div></div>
+        </div>
+
+        <div class="section-title">📈 GROWTH & 💗 CUSTOMER (5 KPIs)</div>
+        <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-label">Kooner Adoption</div><div class="kpi-value yellow">35%</div><div class="kpi-target">Target: 85%</div></div>
+            <div class="kpi-card"><div class="kpi-label">DSP Engagement</div><div class="kpi-value blue">+18%</div><div class="kpi-target">Target: +25%</div></div>
+            <div class="kpi-card"><div class="kpi-label">DSP Satisfaction</div><div class="kpi-value green">82%</div><div class="kpi-target">Target: 80%</div></div>
+            <div class="kpi-card"><div class="kpi-label">Billing Accuracy</div><div class="kpi-value green">98.5%</div><div class="kpi-target">Target: 98%</div></div>
+            <div class="kpi-card"><div class="kpi-label">Customer Health</div><div class="kpi-value blue">42/50</div><div class="kpi-target">Accounts scored</div></div>
+        </div>
+
+        <footer>Last Mile Strategy Team • Leadership KPI Dashboard • Updated February 3, 2026</footer>
+    </div>
+</body>
+</html>

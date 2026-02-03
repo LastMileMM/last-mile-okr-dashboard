@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station Performance Dashboard | Last Mile Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-primary: #0a0a0f; --bg-card: #1a1a24; --text-primary: #ffffff; --text-secondary: #a0a0b0; --text-muted: #606070; --accent-blue: #00d4ff; --accent-green: #00ff88; --accent-red: #ff4757; --accent-yellow: #ffc107; --border-color: rgba(255,255,255,0.08); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; padding: 40px 24px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        header { margin-bottom: 40px; }
+        .breadcrumb { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .breadcrumb a { color: var(--accent-blue); text-decoration: none; }
+        h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+        .subtitle { color: var(--text-secondary); font-size: 14px; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+        @media (max-width: 900px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+        .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; }
+        .kpi-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .kpi-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 28px; font-weight: 800; }
+        .kpi-value.positive { color: var(--accent-green); }
+        .kpi-value.negative { color: var(--accent-red); }
+        .kpi-value.blue { color: var(--accent-blue); }
+        .kpi-change { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+        .section-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+        .section-line { flex: 1; height: 1px; background: var(--border-color); }
+        table { width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+        th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background: rgba(255,255,255,0.03); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; }
+        td { font-size: 14px; }
+        tr:last-child td { border-bottom: none; }
+        .status-badge { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+        .status-on-track { background: rgba(0,255,136,0.15); color: var(--accent-green); }
+        .status-at-risk { background: rgba(255,193,7,0.15); color: var(--accent-yellow); }
+        .status-behind { background: rgba(255,71,87,0.15); color: var(--accent-red); }
+        .metric-good { color: var(--accent-green); }
+        .metric-bad { color: var(--accent-red); }
+        footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border-color); margin-top: 40px; }
+        footer p { font-size: 12px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="breadcrumb"><a href="index.html">OKR Dashboard</a> / Operational Strategy</div>
+            <h1>⚙️ Station Performance Dashboard</h1>
+            <p class="subtitle">MTTR standards & measurement • Station-level performance tracking</p>
+        </header>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Network MTTR</div>
+                <div class="kpi-value blue">4.2 hrs</div>
+                <div class="kpi-change">Baseline: 5.25 hrs</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">MTTR Reduction</div>
+                <div class="kpi-value positive">-20%</div>
+                <div class="kpi-change">Target achieved ✓</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Standards Defined</div>
+                <div class="kpi-value positive">Yes</div>
+                <div class="kpi-change">Published Q1 2026</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Stations Compliant</div>
+                <div class="kpi-value">18/24</div>
+                <div class="kpi-change">75% meeting standard</div>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <div class="section-title">MTTR Standards Framework <div class="section-line"></div></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service Type</th>
+                        <th>Standard MTTR</th>
+                        <th>Current Avg</th>
+                        <th>vs Standard</th>
+                        <th>Measurement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Preventive Maintenance</strong></td>
+                        <td>2.0 hrs</td>
+                        <td class="metric-good">1.8 hrs</td>
+                        <td class="metric-good">-10%</td>
+                        <td>Clock-in to clock-out</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Minor Repairs</strong></td>
+                        <td>4.0 hrs</td>
+                        <td class="metric-good">3.6 hrs</td>
+                        <td class="metric-good">-10%</td>
+                        <td>Ticket open to close</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Major Repairs</strong></td>
+                        <td>8.0 hrs</td>
+                        <td>8.2 hrs</td>
+                        <td class="metric-bad">+2.5%</td>
+                        <td>Ticket open to close</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Emergency Service</strong></td>
+                        <td>6.0 hrs</td>
+                        <td class="metric-good">5.4 hrs</td>
+                        <td class="metric-good">-10%</td>
+                        <td>Call to vehicle ready</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-section">
+            <div class="section-title">Station MTTR Performance <div class="section-line"></div></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Station</th>
+                        <th>Current MTTR</th>
+                        <th>Baseline</th>
+                        <th>Improvement</th>
+                        <th>Trend</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HLA1</strong></td>
+                        <td>3.8 hrs</td>
+                        <td>5.0 hrs</td>
+                        <td class="metric-good">-24%</td>
+                        <td>↑</td>
+                        <td><span class="status-badge status-on-track">On Track</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>HLA2</strong></td>
+                        <td>4.1 hrs</td>
+                        <td>5.2 hrs</td>
+                        <td class="metric-good">-21%</td>
+                        <td>↑</td>
+                        <td><span class="status-badge status-on-track">On Track</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DFW1</strong></td>
+                        <td>4.8 hrs</td>
+                        <td>5.5 hrs</td>
+                        <td>-13%</td>
+                        <td>→</td>
+                        <td><span class="status-badge status-at-risk">At Risk</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DFW2</strong></td>
+                        <td>4.0 hrs</td>
+                        <td>5.1 hrs</td>
+                        <td class="metric-good">-22%</td>
+                        <td>↑</td>
+                        <td><span class="status-badge status-on-track">On Track</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>ATL1</strong></td>
+                        <td>5.2 hrs</td>
+                        <td>5.8 hrs</td>
+                        <td>-10%</td>
+                        <td>↓</td>
+                        <td><span class="status-badge status-behind">Behind</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>ORD1</strong></td>
+                        <td>4.3 hrs</td>
+                        <td>5.3 hrs</td>
+                        <td class="metric-good">-19%</td>
+                        <td>→</td>
+                        <td><span class="status-badge status-at-risk">At Risk</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>Last Mile Strategy Team • Station Performance Dashboard • Updated February 3, 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
