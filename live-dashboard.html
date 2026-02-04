@@ -45,14 +45,14 @@
         .container {
             position: relative;
             z-index: 2;
-            max-width: 1400px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 40px 24px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 48px;
         }
 
         .logo-badge {
@@ -96,6 +96,7 @@
         .subtitle {
             font-size: 16px;
             color: var(--text-secondary);
+            margin-bottom: 20px;
         }
 
         .live-indicator {
@@ -108,7 +109,6 @@
             border-radius: 100px;
             font-size: 12px;
             color: var(--accent-green);
-            margin-top: 16px;
         }
 
         .live-indicator::before {
@@ -120,130 +120,150 @@
             animation: pulse 1s infinite;
         }
 
-        .tabs {
+        .notion-links {
             display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
         }
 
-        .tab-btn {
-            padding: 12px 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 100px;
-            color: var(--text-secondary);
-            font-family: 'IBM Plex Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn:hover {
-            background: var(--bg-secondary);
-            border-color: rgba(255,255,255,0.15);
-        }
-
-        .tab-btn.active {
-            background: var(--text-primary);
-            color: var(--bg-primary);
-            border-color: var(--text-primary);
-        }
-
-        .tab-btn.objectives.active { background: var(--accent-blue); border-color: var(--accent-blue); }
-        .tab-btn.keyresults.active { background: var(--accent-green); border-color: var(--accent-green); }
-
-        .embed-section {
-            display: none;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            overflow: hidden;
-            min-height: 600px;
-        }
-
-        .embed-section.active {
-            display: block;
-        }
-
-        .embed-section iframe {
-            width: 100%;
-            height: 700px;
-            border: none;
-        }
-
-        .embed-header {
+        .notion-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .embed-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .embed-link {
-            font-size: 13px;
-            color: var(--accent-blue);
-            text-decoration: none;
-        }
-
-        .embed-link:hover {
-            text-decoration: underline;
-        }
-
-        .quick-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-            margin-top: 32px;
-        }
-
-        .quick-link {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             text-decoration: none;
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
 
-        .quick-link:hover {
+        .notion-card:hover {
             border-color: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
+            transform: translateX(4px);
+            background: var(--bg-secondary);
         }
 
-        .quick-link h3 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 6px;
+        .notion-card-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
-        .quick-link p {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .notion-note {
-            background: rgba(0,212,255,0.1);
-            border: 1px solid rgba(0,212,255,0.2);
+        .notion-card-icon {
+            width: 48px;
+            height: 48px;
             border-radius: 12px;
-            padding: 16px 20px;
-            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .notion-card.dashboard .notion-card-icon { background: rgba(0,212,255,0.15); }
+        .notion-card.objectives .notion-card-icon { background: rgba(0,255,136,0.15); }
+        .notion-card.keyresults .notion-card-icon { background: rgba(255,149,0,0.15); }
+
+        .notion-card-text h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .notion-card-text p {
             font-size: 14px;
             color: var(--text-secondary);
         }
 
-        .notion-note strong {
+        .notion-card-arrow {
+            font-size: 24px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .notion-card:hover .notion-card-arrow {
+            transform: translateX(4px);
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .other-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .other-links { grid-template-columns: 1fr; }
+        }
+
+        .other-link {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .other-link:hover {
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .other-link-icon {
+            font-size: 20px;
+        }
+
+        .other-link-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: rgba(0,212,255,0.1);
+            border: 1px solid rgba(0,212,255,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 32px;
+        }
+
+        .info-box h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
             color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         footer {
@@ -266,82 +286,82 @@
         <header>
             <div class="logo-badge">Last Mile Strategy</div>
             <h1>2026 Live OKR Dashboard</h1>
-            <p class="subtitle">Connected to Notion • Updates in real-time</p>
+            <p class="subtitle">Connected to Notion • Click to view live data</p>
             <div class="live-indicator">Live Data from Notion</div>
         </header>
 
-        <div class="tabs">
-            <button class="tab-btn objectives active" data-tab="objectives">📋 Objectives</button>
-            <button class="tab-btn keyresults" data-tab="keyresults">🎯 Key Results</button>
-            <button class="tab-btn" data-tab="dashboard">📊 Full Dashboard</button>
+        <div class="section-title">
+            Notion Databases
+            <div class="section-line"></div>
         </div>
 
-        <!-- Objectives Embed -->
-        <div class="embed-section active" id="objectives">
-            <div class="embed-header">
-                <span class="embed-title">📋 Objectives Database</span>
-                <a href="https://koonerlastmilestrategy.notion.site/d3bed8768ddd4ef0a564914e19e5951f?v=0b91e8a9817143ab89bc6b876574c431" target="_blank" class="embed-link">Open in Notion ↗</a>
-            </div>
-            <iframe src="https://koonerlastmilestrategy.notion.site/d3bed8768ddd4ef0a564914e19e5951f?v=0b91e8a9817143ab89bc6b876574c431" allowfullscreen></iframe>
-        </div>
-
-        <!-- Key Results Embed -->
-        <div class="embed-section" id="keyresults">
-            <div class="embed-header">
-                <span class="embed-title">🎯 Key Results Database</span>
-                <a href="https://koonerlastmilestrategy.notion.site/6240b502e53e4f50b90942d3c4818cfe?v=68bedfb4e6ca40a887ca53c8ca8425e3" target="_blank" class="embed-link">Open in Notion ↗</a>
-            </div>
-            <iframe src="https://koonerlastmilestrategy.notion.site/6240b502e53e4f50b90942d3c4818cfe?v=68bedfb4e6ca40a887ca53c8ca8425e3" allowfullscreen></iframe>
-        </div>
-
-        <!-- Full Dashboard Embed -->
-        <div class="embed-section" id="dashboard">
-            <div class="embed-header">
-                <span class="embed-title">📊 Full OKR Dashboard</span>
-                <a href="https://koonerlastmilestrategy.notion.site/Last-Mile-Strategy-OKR-Dashboard-2f724e6be2348170b214c50d55114cd9" target="_blank" class="embed-link">Open in Notion ↗</a>
-            </div>
-            <iframe src="https://koonerlastmilestrategy.notion.site/Last-Mile-Strategy-OKR-Dashboard-2f724e6be2348170b214c50d55114cd9" allowfullscreen></iframe>
-        </div>
-
-        <div class="notion-note">
-            <strong>💡 How it works:</strong> This dashboard embeds your live Notion databases. Any changes you make in Notion will appear here automatically. You may need to be logged into Notion to view the content, or you can make the Notion pages public for anonymous access.
-        </div>
-
-        <div class="quick-links">
-            <a href="dashboard-directory.html" class="quick-link">
-                <h3>📂 Dashboard Directory</h3>
-                <p>View all 18 individual dashboards</p>
+        <div class="notion-links">
+            <a href="https://koonerlastmilestrategy.notion.site/Last-Mile-Strategy-OKR-Dashboard-2f724e6be2348170b214c50d55114cd9" target="_blank" class="notion-card dashboard">
+                <div class="notion-card-content">
+                    <div class="notion-card-icon">📊</div>
+                    <div class="notion-card-text">
+                        <h3>Full OKR Dashboard</h3>
+                        <p>Complete view with all objectives and key results</p>
+                    </div>
+                </div>
+                <span class="notion-card-arrow">→</span>
             </a>
-            <a href="index.html" class="quick-link">
-                <h3>📈 Static Dashboard</h3>
-                <p>Interactive HTML version (offline)</p>
+
+            <a href="https://koonerlastmilestrategy.notion.site/d3bed8768ddd4ef0a564914e19e5951f?v=0b91e8a9817143ab89bc6b876574c431" target="_blank" class="notion-card objectives">
+                <div class="notion-card-content">
+                    <div class="notion-card-icon">📋</div>
+                    <div class="notion-card-text">
+                        <h3>Objectives Database</h3>
+                        <p>4 strategic objectives across all pillars</p>
+                    </div>
+                </div>
+                <span class="notion-card-arrow">→</span>
             </a>
-            <a href="https://koonerlastmilestrategy.notion.site/Last-Mile-Strategy-OKR-Dashboard-2f724e6be2348170b214c50d55114cd9" target="_blank" class="quick-link">
-                <h3>📝 Edit in Notion</h3>
-                <p>Update OKRs directly in Notion</p>
+
+            <a href="https://koonerlastmilestrategy.notion.site/6240b502e53e4f50b90942d3c4818cfe?v=68bedfb4e6ca40a887ca53c8ca8425e3" target="_blank" class="notion-card keyresults">
+                <div class="notion-card-content">
+                    <div class="notion-card-icon">🎯</div>
+                    <div class="notion-card-text">
+                        <h3>Key Results Database</h3>
+                        <p>19 measurable key results with progress tracking</p>
+                    </div>
+                </div>
+                <span class="notion-card-arrow">→</span>
             </a>
+        </div>
+
+        <div class="section-title">
+            Other Dashboards
+            <div class="section-line"></div>
+        </div>
+
+        <div class="other-links">
+            <a href="index.html" class="other-link">
+                <span class="other-link-icon">📈</span>
+                <span class="other-link-text">Static OKR Dashboard</span>
+            </a>
+            <a href="dashboard-directory.html" class="other-link">
+                <span class="other-link-icon">📂</span>
+                <span class="other-link-text">All 18 Dashboards</span>
+            </a>
+            <a href="station-financial-scorecard.html" class="other-link">
+                <span class="other-link-icon">💰</span>
+                <span class="other-link-text">Financial Scorecard</span>
+            </a>
+            <a href="leadership-kpi-dashboard.html" class="other-link">
+                <span class="other-link-icon">⚙️</span>
+                <span class="other-link-text">Leadership KPIs</span>
+            </a>
+        </div>
+
+        <div class="info-box">
+            <h4>💡 How Updates Work</h4>
+            <p>Click any Notion link above to view live data. When you update objectives, key results, or progress in Notion, changes appear immediately — no file uploads needed!</p>
         </div>
 
         <footer>
             <p>Last Mile Strategy Team • Live Dashboard • Powered by Notion</p>
         </footer>
     </div>
-
-    <script>
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Update active tab
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Show corresponding section
-                const tabId = this.dataset.tab;
-                document.querySelectorAll('.embed-section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-    </script>
 </body>
 </html>
