@@ -6,65 +6,469 @@
     <title>Leadership KPI Dashboard | Last Mile Strategy</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-primary: #0a0a0f; --bg-card: #1a1a24; --text-primary: #ffffff; --text-secondary: #a0a0b0; --text-muted: #606070; --accent-blue: #00d4ff; --accent-green: #00ff88; --accent-yellow: #ffc107; --accent-red: #ff4757; --border-color: rgba(255,255,255,0.08); }
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-card-hover: #22222e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --accent-green: #00ff88;
+            --accent-blue: #00d4ff;
+            --accent-orange: #ff9500;
+            --accent-pink: #ff6b9d;
+            --border-color: rgba(255,255,255,0.08);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; padding: 40px 24px; }
-        .container { max-width: 1400px; margin: 0 auto; }
-        header { margin-bottom: 40px; }
-        .breadcrumb { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
-        .breadcrumb a { color: var(--accent-blue); text-decoration: none; }
-        h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 8px; }
-        .subtitle { color: var(--text-secondary); font-size: 14px; }
-        .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 32px; }
-        @media (max-width: 1024px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
-        .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; text-align: center; }
-        .kpi-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
-        .kpi-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 800; }
-        .kpi-value.green { color: var(--accent-green); }
-        .kpi-value.blue { color: var(--accent-blue); }
-        .kpi-value.yellow { color: var(--accent-yellow); }
-        .kpi-value.red { color: var(--accent-red); }
-        .kpi-target { font-size: 10px; color: var(--text-secondary); margin-top: 4px; }
-        .section-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; margin: 24px 0 16px; color: var(--text-secondary); }
-        footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border-color); margin-top: 40px; font-size: 12px; color: var(--text-muted); }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 0%, rgba(0,212,255,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,255,136,0.06) 0%, transparent 50%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--text-primary); }
+
+        .header-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .kr-badge {
+            padding: 8px 16px;
+            background: rgba(0,212,255,0.15);
+            border: 1px solid rgba(0,212,255,0.3);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .kpi-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .kpi-number {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            background: rgba(0,212,255,0.15);
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        .kpi-category {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .kpi-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .kpi-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .kpi-metrics {
+            display: flex;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .kpi-metric {
+            flex: 1;
+        }
+
+        .metric-value {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .info-box {
+            background: rgba(0,212,255,0.1);
+            border: 1px solid rgba(0,212,255,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 32px;
+        }
+
+        .info-box h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 48px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+
+        footer p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
+    <div class="bg-gradient"></div>
+
     <div class="container">
         <header>
-            <div class="breadcrumb"><a href="index.html">OKR Dashboard</a> / Operational Strategy</div>
-            <h1>⚙️ Leadership KPI Dashboard</h1>
-            <p class="subtitle">15 key metrics framework • Executive-level visibility</p>
+            <a href="dashboard-directory.html" class="back-link">← Back to Dashboard Directory</a>
+            <div class="header-content">
+                <div>
+                    <h1>Leadership KPI Dashboard</h1>
+                    <p class="subtitle">7 key metrics framework for executive visibility</p>
+                </div>
+                <span class="kr-badge">KR-2.4 • Operational Strategy</span>
+            </div>
         </header>
-        
-        <div class="section-title">💰 FINANCIAL (5 KPIs)</div>
-        <div class="kpi-grid">
-            <div class="kpi-card"><div class="kpi-label">Revenue</div><div class="kpi-value">$4.2M</div><div class="kpi-target">MTD</div></div>
-            <div class="kpi-card"><div class="kpi-label">Margin vs Plan</div><div class="kpi-value green">+3.2%</div><div class="kpi-target">Target: +5%</div></div>
-            <div class="kpi-card"><div class="kpi-label">Labor Cost %</div><div class="kpi-value yellow">32.4%</div><div class="kpi-target">Target: 30%</div></div>
-            <div class="kpi-card"><div class="kpi-label">Parts Savings</div><div class="kpi-value green">-6.2%</div><div class="kpi-target">Target: -10%</div></div>
-            <div class="kpi-card"><div class="kpi-label">3P Optimization</div><div class="kpi-value blue">$380K</div><div class="kpi-target">Identified</div></div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Key Metrics</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">Q1</div>
+                <div class="stat-label">Target Delivery</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Pillars Covered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">Weekly</div>
+                <div class="stat-label">Update Cadence</div>
+            </div>
         </div>
 
-        <div class="section-title">⚙️ OPERATIONAL (5 KPIs)</div>
-        <div class="kpi-grid">
-            <div class="kpi-card"><div class="kpi-label">MTTR</div><div class="kpi-value green">4.2 hrs</div><div class="kpi-target">-20% vs baseline</div></div>
-            <div class="kpi-card"><div class="kpi-label">PM Compliance</div><div class="kpi-value green">95%</div><div class="kpi-target">Target: 95%</div></div>
-            <div class="kpi-card"><div class="kpi-label">Ops Review</div><div class="kpi-value blue">92%</div><div class="kpi-target">Weekly cadence</div></div>
-            <div class="kpi-card"><div class="kpi-label">Fleet Uptime</div><div class="kpi-value green">97.2%</div><div class="kpi-target">Target: 95%</div></div>
-            <div class="kpi-card"><div class="kpi-label">SLA Performance</div><div class="kpi-value green">98.1%</div><div class="kpi-target">Target: 98%</div></div>
+        <div class="section-title">
+            Executive KPI Framework
+            <div class="section-line"></div>
         </div>
 
-        <div class="section-title">📈 GROWTH & 💗 CUSTOMER (5 KPIs)</div>
         <div class="kpi-grid">
-            <div class="kpi-card"><div class="kpi-label">Kooner Adoption</div><div class="kpi-value yellow">35%</div><div class="kpi-target">Target: 85%</div></div>
-            <div class="kpi-card"><div class="kpi-label">DSP Engagement</div><div class="kpi-value blue">+18%</div><div class="kpi-target">Target: +25%</div></div>
-            <div class="kpi-card"><div class="kpi-label">DSP Satisfaction</div><div class="kpi-value green">82%</div><div class="kpi-target">Target: 80%</div></div>
-            <div class="kpi-card"><div class="kpi-label">Billing Accuracy</div><div class="kpi-value green">98.5%</div><div class="kpi-target">Target: 98%</div></div>
-            <div class="kpi-card"><div class="kpi-label">Customer Health</div><div class="kpi-value blue">42/50</div><div class="kpi-target">Accounts scored</div></div>
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-number">KPI 1</span>
+                    <span class="kpi-category">Financial</span>
+                </div>
+                <div class="kpi-title">Margin vs. Plan</div>
+                <div class="kpi-description">Station-level margin performance compared to budget targets</div>
+                <div class="kpi-metrics">
+                    <div class="kpi-metric">
+                        <div class="metric-value">5%</div>
+                        <div class="metric-label">Target Improvement</div>
+                    </div>
+                    <div class="kpi-metric">
+                        <div class="metric-value">—</div>
+                        <div class="metric-label">Current</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-number">KPI 2</span>
+                    <span class="kpi-category">Financial</span>
+                </div>
+                <div class="kpi-title">Labor Cost %</div>
+                <div class="kpi-description">Labor cost as percentage of revenue by station</div>
+                <div class="kpi-metrics">
+                    <div class="kpi-metric">
+                        <div class="metric-value">90%</div>
+                        <div class="metric-label">Stations at Target</div>
+                    </div>
+                    <div class="kpi-metric">
+                        <div class="metric-value">—</div>
+                        <div class="metric-label">Current</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-number">KPI 3</span>
+                    <span class="kpi-category">Operational</span>
+                </div>
+                <div class="kpi-title">MTTR Performance</div>
+                <div class="kpi-description">Mean Time to Repair against defined standards</div>
+                <div class="kpi-metrics">
+                    <div class="kpi-metric">
+                        <div class="metric-value">TBD</div>
+                        <div class="metric-label">Target</div>
+                    </div>
+                    <div class="kpi-metric">
+                        <div class="metric-value">—</div>
+                        <div class="metric-label">Current</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-number">KPI 4</span>
+                    <span class="kpi-category">Operational</span>
+                </div>
+                <div class="kpi-title">PM Compliance</div>
+                <div class="kpi-description">Preventive maintenance scheduling and completion rates</div>
+                <div class="kpi-metrics">
+                    <div class="kpi-metric">
+                        <div class="metric-value">95%</div>
+                        <div class="metric-label">Target</div>
+                    </div>
+                    <div class="kpi-metric">
+                        <div class="metric-value">—</div>
+                        <div class="metric-label">Current</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-number">KPI 5</span>
+                    <span class="kpi-category">Growth</span>
+                </div>
+                <div class="kpi-title">Kooner Adoption</div>
+                <div class="kpi-description">Platform adoption rate across all last mile stations</div>
+                <div class="kpi-metrics">
+                    <div class="kpi-metric">
+                        <div class="metric-value">85%</div>
+                        <div class="metric-label">Target</div>
+                    </div>
+                    <div class="kpi-metric">
+                        <div class="metric-value">35%</div>
+                        <div class="metric-label">Current</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-number">KPI 6</span>
+                    <span class="kpi-category">Customer</span>
+                </div>
+                <div class="kpi-title">DSP Satisfaction</div>
+                <div class="kpi-description">Customer satisfaction score via DSP Survey feedback</div>
+                <div class="kpi-metrics">
+                    <div class="kpi-metric">
+                        <div class="metric-value">80%+</div>
+                        <div class="metric-label">Target</div>
+                    </div>
+                    <div class="kpi-metric">
+                        <div class="metric-value">—</div>
+                        <div class="metric-label">Current</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span class="kpi-number">KPI 7</span>
+                    <span class="kpi-category">Customer</span>
+                </div>
+                <div class="kpi-title">Billing Accuracy</div>
+                <div class="kpi-description">Invoice accuracy rate across all customer invoices</div>
+                <div class="kpi-metrics">
+                    <div class="kpi-metric">
+                        <div class="metric-value">98%+</div>
+                        <div class="metric-label">Target</div>
+                    </div>
+                    <div class="kpi-metric">
+                        <div class="metric-value">—</div>
+                        <div class="metric-label">Current</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <footer>Last Mile Strategy Team • Leadership KPI Dashboard • Updated February 3, 2026</footer>
+        <div class="info-box">
+            <h4>📊 Framework Purpose</h4>
+            <p>This dashboard provides executive-level visibility into the 7 most critical metrics across all strategic pillars. Updated weekly, it enables leadership to quickly assess operational health and identify areas requiring attention. The framework is part of KR-2.4 under the Operational Strategy pillar, due Q1 2026.</p>
+        </div>
+
+        <footer>
+            <div class="footer-links">
+                <a href="index.html">📊 OKR Dashboard</a>
+                <a href="dashboard-directory.html">📂 All Dashboards</a>
+                <a href="live-dashboard-v2.html">🔴 Live Dashboard</a>
+            </div>
+            <p>Last Mile Strategy Team • Leadership KPI Dashboard • KR-2.4</p>
+        </footer>
     </div>
 </body>
 </html>

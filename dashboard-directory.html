@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Directory | Last Mile Strategy</title>
+    <title>Last Mile Strategy | Dashboard Directory</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
             --bg-card: #1a1a24;
+            --bg-card-hover: #22222e;
             --text-primary: #ffffff;
             --text-secondary: #a0a0b0;
             --text-muted: #606070;
@@ -17,24 +19,131 @@
             --accent-orange: #ff9500;
             --accent-pink: #ff6b9d;
             --border-color: rgba(255,255,255,0.08);
+            --financial: #00ff88;
+            --operational: #00d4ff;
+            --growth: #ff9500;
+            --customer: #ff6b9d;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; padding: 40px 24px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 48px; }
-        .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-bottom: 24px; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 0%, rgba(0,255,136,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,212,255,0.06) 0%, transparent 50%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+
         .back-link:hover { color: var(--text-primary); }
-        h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 36px; font-weight: 800; margin-bottom: 12px; }
-        .subtitle { color: var(--text-secondary); font-size: 16px; }
-        .pillar-section { margin-bottom: 40px; }
-        .pillar-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-        .pillar-header h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; }
-        .pillar-header .line { flex: 1; height: 1px; background: var(--border-color); }
-        .pillar-header.financial h2 { color: var(--accent-green); }
-        .pillar-header.operational h2 { color: var(--accent-blue); }
-        .pillar-header.growth h2 { color: var(--accent-orange); }
-        .pillar-header.customer h2 { color: var(--accent-pink); }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+        h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 600px) {
+            .stats-row { grid-template-columns: 1fr; }
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--accent-green);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .pillar-section {
+            margin-bottom: 40px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
         .dashboard-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -43,186 +152,279 @@
             text-decoration: none;
             color: var(--text-primary);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
+
         .dashboard-card:hover {
             border-color: rgba(255,255,255,0.2);
             transform: translateY(-2px);
+            background: var(--bg-card-hover);
         }
-        .dashboard-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
+
+        .dashboard-card.financial:hover { border-color: var(--financial); }
+        .dashboard-card.operational:hover { border-color: var(--operational); }
+        .dashboard-card.growth:hover { border-color: var(--growth); }
+        .dashboard-card.customer:hover { border-color: var(--customer); }
+
+        .card-icon {
+            font-size: 28px;
         }
-        .dashboard-card.financial::before { background: var(--accent-green); }
-        .dashboard-card.operational::before { background: var(--accent-blue); }
-        .dashboard-card.growth::before { background: var(--accent-orange); }
-        .dashboard-card.customer::before { background: var(--accent-pink); }
-        .dashboard-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-        .dashboard-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
-        .dashboard-card .arrow { position: absolute; bottom: 20px; right: 20px; font-size: 18px; opacity: 0.3; transition: opacity 0.3s; }
-        .dashboard-card:hover .arrow { opacity: 1; }
-        .stats { display: flex; justify-content: center; gap: 48px; margin-bottom: 48px; padding: 24px; background: var(--bg-card); border-radius: 16px; }
-        .stat-item { text-align: center; }
-        .stat-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent-blue); }
-        .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
-        footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border-color); margin-top: 40px; font-size: 12px; color: var(--text-muted); }
+
+        .card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .card-kr {
+            font-size: 12px;
+            color: var(--text-muted);
+            padding-top: 8px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .main-dashboards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .main-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .main-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        .main-card h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .main-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 48px;
+        }
+
+        footer p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
+    <div class="bg-gradient"></div>
+
     <div class="container">
         <header>
             <a href="index.html" class="back-link">← Back to OKR Dashboard</a>
-            <h1>📊 Dashboard Directory</h1>
-            <p class="subtitle">18 interactive dashboards organized by strategic pillar</p>
+            <h1>Dashboard Directory</h1>
+            <p class="subtitle">All operational dashboards for the Last Mile Strategy team</p>
         </header>
 
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-value">18</div>
-                <div class="stat-label">Dashboards</div>
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number">18</div>
+                <div class="stat-label">Total Dashboards</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-value">4</div>
-                <div class="stat-label">Pillars</div>
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Strategic Pillars</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-value">19</div>
+            <div class="stat-card">
+                <div class="stat-number">19</div>
                 <div class="stat-label">Key Results</div>
             </div>
         </div>
 
+        <div class="main-dashboards">
+            <a href="index.html" class="main-card">
+                <h3>📊 Main OKR Dashboard</h3>
+                <p>Complete view of all 4 objectives and 19 key results</p>
+            </a>
+            <a href="live-dashboard-v2.html" class="main-card">
+                <h3>🔴 Live Notion Dashboard</h3>
+                <p>Real-time data connected to Notion databases</p>
+            </a>
+        </div>
+
+        <!-- Financial Performance -->
         <div class="pillar-section">
-            <div class="pillar-header financial">
-                <h2>💰 Financial Performance</h2>
-                <div class="line"></div>
+            <div class="section-title">
+                💰 Financial Performance (5 KRs)
+                <div class="section-line"></div>
             </div>
             <div class="dashboard-grid">
                 <a href="station-financial-scorecard.html" class="dashboard-card financial">
-                    <h3>Station Financial Scorecard</h3>
-                    <p>Monthly financial performance by station • Margin vs. Plan tracking</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">📈</span>
+                    <span class="card-title">Station Financial Scorecard</span>
+                    <span class="card-description">Monthly financial performance and margin vs plan tracking</span>
+                    <span class="card-kr">KR-1.1, KR-1.2</span>
                 </a>
                 <a href="labor-cost-dashboard.html" class="dashboard-card financial">
-                    <h3>Labor Cost Dashboard</h3>
-                    <p>Labor cost as % of revenue • Station-level targets</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">👷</span>
+                    <span class="card-title">Labor Cost Dashboard</span>
+                    <span class="card-description">Labor cost % of revenue by station with targets</span>
+                    <span class="card-kr">KR-1.4</span>
                 </a>
                 <a href="procurement-dashboard.html" class="dashboard-card financial">
-                    <h3>Procurement Dashboard</h3>
-                    <p>Parts & materials spend • Bulk purchasing savings</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">📦</span>
+                    <span class="card-title">Procurement Dashboard</span>
+                    <span class="card-description">Parts & materials spend tracking and bulk purchasing savings</span>
+                    <span class="card-kr">KR-1.3</span>
                 </a>
                 <a href="3p-cost-analysis-dashboard.html" class="dashboard-card financial">
-                    <h3>3P Cost Analysis Dashboard</h3>
-                    <p>Third-party services breakdown • Contract optimization</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">🔧</span>
+                    <span class="card-title">3P Cost Analysis</span>
+                    <span class="card-description">Third-party services breakdown and contract optimization</span>
+                    <span class="card-kr">KR-1.5</span>
                 </a>
             </div>
         </div>
 
+        <!-- Operational Strategy -->
         <div class="pillar-section">
-            <div class="pillar-header operational">
-                <h2>⚙️ Operational Strategy</h2>
-                <div class="line"></div>
+            <div class="section-title">
+                ⚙️ Operational Strategy (6 KRs)
+                <div class="section-line"></div>
             </div>
             <div class="dashboard-grid">
                 <a href="station-performance-dashboard.html" class="dashboard-card operational">
-                    <h3>Station Performance Dashboard</h3>
-                    <p>MTTR standards & measurement • Station-level tracking</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">🏭</span>
+                    <span class="card-title">Station Performance</span>
+                    <span class="card-description">MTTR standards and measurement tracking</span>
+                    <span class="card-kr">KR-2.1</span>
                 </a>
                 <a href="pm-scheduling-dashboard.html" class="dashboard-card operational">
-                    <h3>PM Scheduling Dashboard</h3>
-                    <p>Proactive PM framework • DSP enrollment & revenue</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">📅</span>
+                    <span class="card-title">PM Scheduling</span>
+                    <span class="card-description">Proactive PM framework and DSP enrollment</span>
+                    <span class="card-kr">KR-2.2</span>
                 </a>
                 <a href="ops-review-dashboard.html" class="dashboard-card operational">
-                    <h3>Ops Review Dashboard</h3>
-                    <p>Weekly ops review playbook • Station compliance</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">📋</span>
+                    <span class="card-title">Ops Review</span>
+                    <span class="card-description">Weekly ops review playbook and compliance</span>
+                    <span class="card-kr">KR-2.3</span>
                 </a>
                 <a href="leadership-kpi-dashboard.html" class="dashboard-card operational">
-                    <h3>Leadership KPI Dashboard</h3>
-                    <p>15 key metrics framework • Executive visibility</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">🎯</span>
+                    <span class="card-title">Leadership KPI Dashboard</span>
+                    <span class="card-description">7 key metrics framework for executive visibility</span>
+                    <span class="card-kr">KR-2.4</span>
                 </a>
                 <a href="capacity-planning-dashboard.html" class="dashboard-card operational">
-                    <h3>Capacity Planning Dashboard</h3>
-                    <p>Peak season capacity model • Resource guidelines</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">📊</span>
+                    <span class="card-title">Capacity Planning</span>
+                    <span class="card-description">Peak season capacity model and guidelines</span>
+                    <span class="card-kr">KR-2.5</span>
                 </a>
                 <a href="delay-communication-dashboard.html" class="dashboard-card operational">
-                    <h3>Delay Communication Dashboard</h3>
-                    <p>Proactive delay framework • Dispatch execution</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">⏰</span>
+                    <span class="card-title">Delay Communication</span>
+                    <span class="card-description">Proactive delay framework for dispatch execution</span>
+                    <span class="card-kr">KR-2.6</span>
                 </a>
             </div>
         </div>
 
+        <!-- Growth & Expansion -->
         <div class="pillar-section">
-            <div class="pillar-header growth">
-                <h2>📈 Growth & Expansion</h2>
-                <div class="line"></div>
+            <div class="section-title">
+                📈 Growth & Expansion (4 KRs)
+                <div class="section-line"></div>
             </div>
             <div class="dashboard-grid">
                 <a href="kooner-adoption-dashboard.html" class="dashboard-card growth">
-                    <h3>Kooner Adoption Dashboard</h3>
-                    <p>Platform adoption tracking • Station-level progress</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">🚀</span>
+                    <span class="card-title">Kooner Adoption</span>
+                    <span class="card-description">Platform adoption tracking (35% → 85% target)</span>
+                    <span class="card-kr">KR-3.1</span>
                 </a>
                 <a href="dsp-engagement-dashboard.html" class="dashboard-card growth">
-                    <h3>DSP Engagement Dashboard</h3>
-                    <p>Network engagement tracking • Partnership health</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">🤝</span>
+                    <span class="card-title">DSP Engagement</span>
+                    <span class="card-description">Network engagement and partnership health</span>
+                    <span class="card-kr">KR-3.2</span>
                 </a>
                 <a href="newsletter-analytics.html" class="dashboard-card growth">
-                    <h3>Newsletter Analytics</h3>
-                    <p>DSP Monthly Newsletter • Open rate tracking</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">📧</span>
+                    <span class="card-title">Newsletter Analytics</span>
+                    <span class="card-description">DSP newsletter open rate and engagement tracking</span>
+                    <span class="card-kr">KR-3.3</span>
                 </a>
                 <a href="station-launch-tracker.html" class="dashboard-card growth">
-                    <h3>Station Launch Tracker</h3>
-                    <p>New station playbook • Pilot tracking</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">🏗️</span>
+                    <span class="card-title">Station Launch Tracker</span>
+                    <span class="card-description">New station playbook and pilot tracking</span>
+                    <span class="card-kr">KR-3.5</span>
                 </a>
             </div>
         </div>
 
+        <!-- Customer Satisfaction -->
         <div class="pillar-section">
-            <div class="pillar-header customer">
-                <h2>💗 Customer Satisfaction</h2>
-                <div class="line"></div>
+            <div class="section-title">
+                💗 Customer Satisfaction (4 KRs)
+                <div class="section-line"></div>
             </div>
             <div class="dashboard-grid">
                 <a href="dsp-survey-dashboard.html" class="dashboard-card customer">
-                    <h3>DSP Survey Dashboard</h3>
-                    <p>Satisfaction & loyalty • Survey feedback analysis</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">⭐</span>
+                    <span class="card-title">DSP Survey Dashboard</span>
+                    <span class="card-description">Satisfaction & loyalty measurement via DSP feedback</span>
+                    <span class="card-kr">KR-4.1</span>
                 </a>
                 <a href="customer-health-dashboard.html" class="dashboard-card customer">
-                    <h3>Customer Health Dashboard</h3>
-                    <p>Health scoring model • Top 50 accounts</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">❤️</span>
+                    <span class="card-title">Customer Health Dashboard</span>
+                    <span class="card-description">DSP adoption dashboard for 50 accounts</span>
+                    <span class="card-kr">KR-4.2</span>
                 </a>
                 <a href="billing-accuracy-dashboard.html" class="dashboard-card customer">
-                    <h3>Billing Accuracy Dashboard</h3>
-                    <p>Invoice accuracy • Dispute tracking</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">💵</span>
+                    <span class="card-title">Billing Accuracy</span>
+                    <span class="card-description">Invoice accuracy tracking and dispute reduction</span>
+                    <span class="card-kr">KR-4.3</span>
                 </a>
                 <a href="onboarding-tracker.html" class="dashboard-card customer">
-                    <h3>Onboarding Tracker</h3>
-                    <p>Customer onboarding playbook • Success tracking</p>
-                    <span class="arrow">→</span>
+                    <span class="card-icon">🎓</span>
+                    <span class="card-title">Onboarding Tracker</span>
+                    <span class="card-description">Standardized customer onboarding playbook</span>
+                    <span class="card-kr">KR-4.5</span>
                 </a>
             </div>
         </div>
 
-        <footer>Last Mile Strategy Team • Dashboard Directory • Updated February 3, 2026</footer>
+        <footer>
+            <p>Last Mile Strategy Team • Dashboard Directory • Updated February 2026</p>
+        </footer>
     </div>
 </body>
 </html>
