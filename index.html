@@ -163,6 +163,22 @@ body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink);
   .cadence-grid{grid-template-columns:repeat(2,1fr)}
   .timeline{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ── Definitions tab ── */
+.def-pillar-header { display:flex; align-items:center; gap:10px; margin:32px 0 16px; }
+.def-pillar-header h2 { font-size:15px; font-weight:600; }
+.def-pillar-header-line { flex:1; height:1px; background:var(--line); }
+.def-card { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:12px; overflow:hidden; }
+.def-card-header { display:flex; align-items:baseline; gap:12px; padding:14px 20px 10px; border-bottom:1px solid var(--line); }
+.def-kr-id { font-family:'DM Mono',monospace; font-size:11px; font-weight:600; flex-shrink:0; }
+.def-kr-title { font-size:13px; font-weight:600; color:var(--chrome); line-height:1.35; }
+.def-card-body { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; }
+.def-cell { padding:12px 20px; border-right:1px solid var(--line); }
+.def-cell:last-child { border-right:none; }
+.def-cell-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin-bottom:5px; }
+.def-cell-text { font-size:12px; color:var(--ink); line-height:1.5; }
+.def-cell-text code { font-family:'DM Mono',monospace; font-size:11px; background:#f3f4f6; padding:1px 5px; border-radius:4px; }
+@media(max-width:700px){ .def-card-body{ grid-template-columns:1fr; } .def-cell{ border-right:none; border-bottom:1px solid var(--line); } .def-cell:last-child{border-bottom:none;} }
 </style>
 </head>
 <body>
@@ -187,6 +203,9 @@ body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink);
     </button>
     <button class="nav-item" onclick="switchTab('cadence',this)">
       <span class="nav-dot" style="background:#94a3b8"></span> Update Cadence
+    </button>
+    <button class="nav-item" onclick="switchTab('defs',this)">
+      <span class="nav-dot" style="background:#94a3b8"></span> KR Definitions
     </button>
     <div class="nav-label">Pillars</div>
     <button class="nav-item" onclick="switchTab('p1',this)">
@@ -559,6 +578,18 @@ body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink);
 <div class="section" id="sec-p4"><div class="page-header"><div class="page-header-left"><h1>Customer Satisfaction</h1><p>OBJ-4 · Strengthen Customer Relationships &amp; Satisfaction · 7 KRs</p></div></div><div id="p4-detail"></div></div>
 <div class="section" id="sec-p5"><div class="page-header"><div class="page-header-left"><h1>Strategy &amp; Expansion</h1><p>OBJ-5 · Develop &amp; Deliver the Last Mile Strategy &amp; Expansion Framework · 9 KRs</p></div></div><div id="p5-detail"></div></div>
 
+
+<!-- ── DEFINITIONS ── -->
+<div class="section" id="sec-defs">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>KR Definitions</h1>
+      <p>How each key result is measured, calculated, and sourced</p>
+    </div>
+  </div>
+  <div id="defs-container"></div>
+</div>
+
 </main>
 </div>
 
@@ -796,6 +827,243 @@ Object.entries(pillarConfig).forEach(([pKey, cfg]) => {
     });
   }
 });
+
+// ── KR Definitions data ───────────────────────────────────────────────────────
+const krDefs = [
+  // Financial
+  { id:'KR-1.1', pillar:'Financial', color:'#1F4E79', pale:'#DEEAF1',
+    label:'Station Financial Performance Framework',
+    what:'A published framework defining margin targets, cost benchmarks, and improvement levers for each station. Measured as a binary: framework published and adopted by ops leadership.',
+    how:'Marked complete when the framework document is approved, distributed to all station managers, and referenced in at least one ops review.',
+    source:'Strategy team output · Finance review sign-off' },
+  { id:'KR-1.2', pillar:'Financial', color:'#1F4E79', pale:'#DEEAF1',
+    label:'Monthly Financial Scorecards — 100% of Stations',
+    what:'Percentage of active stations receiving a monthly financial scorecard covering revenue, cost, margin, and variance to plan.',
+    how:'<code>Stations receiving scorecard ÷ Total active stations × 100</code>. Scorecards must be delivered by the 5th of the following month.',
+    source:'Finance · Station manager distribution list' },
+  { id:'KR-1.3', pillar:'Financial', color:'#1F4E79', pale:'#DEEAF1',
+    label:'Parts & Materials Spend Reduction −10%',
+    what:'Percentage reduction in total parts and materials spend versus the 2025 baseline, achieved through bulk purchasing and vendor consolidation.',
+    how:'<code>(2025 baseline spend − 2026 YTD spend) ÷ 2025 baseline spend × 100</code>. Measured monthly; −10% target by Q3 close.',
+    source:'Finance · Accounts payable · Purchase order system' },
+  { id:'KR-1.4', pillar:'Financial', color:'#1F4E79', pale:'#DEEAF1',
+    label:'Labor Cost % Target — 90% of Stations',
+    what:'Percentage of stations where labor cost as a share of revenue meets or is below the defined target threshold for 2026.',
+    how:'<code>Stations at or below labor cost % target ÷ Total active stations × 100</code>. Threshold defined in the financial framework (KR-1.1).',
+    source:'Payroll · Revenue reporting · Finance monthly close' },
+  { id:'KR-1.5', pillar:'Financial', color:'#1F4E79', pale:'#DEEAF1',
+    label:'Last Mile Pricing Strategy',
+    what:'A completed pricing strategy document defining rate structures, profitability floors, and contract terms for Amazon and DSP segments. Binary: approved or not.',
+    how:'Marked complete when strategy doc is approved by Finance and signed off by leadership. Includes rate card, margin floor by route type, and contract term standards.',
+    source:'Strategy team · Finance · Legal review' },
+
+  // Operational
+  { id:'KR-2.1', pillar:'Operational', color:'#375623', pale:'#EBF3E8',
+    label:'ATTR Reduction Framework',
+    what:'Average Technician Turnaround Time (ATTR) — the average number of days from work order creation to completion. Measured weekly across all active stations. Target: −20% from the WK05 2026 baseline of 2.39 days.',
+    how:'<code>Sum of (WO completion date − WO creation date) ÷ Total WOs completed in period</code>. Pulled from FleetIQ work order timestamps. WK11 current: 1.91 days (−20.1%).',
+    source:'FleetIQ · Work order report · Weekly ops pull' },
+  { id:'KR-2.2', pillar:'Operational', color:'#375623', pale:'#EBF3E8',
+    label:'PM Compliance Standards & Audit Framework',
+    what:'Percentage of scheduled preventive maintenance tasks completed on time across all stations. Target threshold: 95%+ for 2026. KR is complete when the standards document and audit process are published and in use.',
+    how:'<code>PM tasks completed on schedule ÷ Total PM tasks scheduled × 100</code>. Audit framework complete when process doc is approved and first audit cycle is underway.',
+    source:'FleetIQ · PM schedule module · Ops team' },
+  { id:'KR-2.4', pillar:'Operational', color:'#375623', pale:'#EBF3E8',
+    label:'Leadership KPI Dashboard — 15 Metrics',
+    what:'A live dashboard surfacing 15 defined operational and strategic KPIs for leadership review. Measured as count of KPIs live and updating on schedule.',
+    how:'<code>Count of KPIs actively populating in dashboard ÷ 15 target KPIs</code>. A KPI is "live" when it has a defined data source, pulls automatically or via defined manual process, and has been reviewed in at least one leadership meeting.',
+    source:'FleetIQ · Finance · Strategy team · This dashboard' },
+  { id:'KR-2.5', pillar:'Operational', color:'#375623', pale:'#EBF3E8',
+    label:'Peak Season Capacity Planning Model',
+    what:'A completed model enabling operations to project station staffing, fleet, and route capacity needs for Q4 peak season. Binary: model delivered and used in planning.',
+    how:'Marked complete when model is delivered to ops leadership, inputs are defined, and it is referenced in at least one capacity planning meeting before Q3 close.',
+    source:'Strategy team · Ops leadership · FleetIQ route data' },
+  { id:'KR-2.6', pillar:'Operational', color:'#375623', pale:'#EBF3E8',
+    label:'Quality & Compliance Audit Framework',
+    what:'A published framework covering Amazon PM standards, DOT/inspection requirements, and SLA adherence benchmarks. Binary: framework published and adopted.',
+    how:'Complete when framework doc is approved, distributed, and incorporated into the station operations review cadence.',
+    source:'Strategy team · Compliance · Amazon SLA standards · DOT requirements' },
+
+  // Growth
+  { id:'KR-3.1', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'Kooner Adoption — 85% of Stations',
+    what:'Percentage of active Last Mile stations dispatching via the Kooner platform as their primary dispatch tool. Measured weekly from platform logs.',
+    how:'<code>Stations with Kooner as primary dispatch ÷ Total active stations × 100</code>. "Primary" means ≥50% of weekly dispatches routed through Kooner. WK11: 54% (6 live stations). Target: 85% by Q4 2026.',
+    source:'Kooner platform dispatch log · Amazon WK scorecard · Weekly ops pull' },
+  { id:'KR-3.2', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'DSP Network Engagement +25%',
+    what:'Percentage increase in measurable DSP engagement activities — newsletter opens, event attendance, direct outreach responses — versus 2025 baseline.',
+    how:'<code>(2026 engagement count − 2025 baseline) ÷ 2025 baseline × 100</code>. Engagement defined across: newsletter opens, DSP calls/meetings, platform logins, and survey responses.',
+    source:'Newsletter platform · CRM / outreach log · Strategy team' },
+  { id:'KR-3.3', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'DSP Monthly Newsletter — 80%+ Open Rate',
+    what:'Open rate of the monthly DSP newsletter. Measures content relevance and audience engagement. Target: 80%+ per issue.',
+    how:'<code>Unique opens ÷ Total delivered emails × 100</code>. Tracked per issue. Reported as trailing 3-issue average once 3 issues have been sent.',
+    source:'Email platform (Mailchimp / equivalent) · Monthly send report' },
+  { id:'KR-3.4', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'Site Acquisitions — 3+ Executed',
+    what:'Count of new Last Mile station sites where a lease or acquisition agreement is executed in 2026. Target: 3 or more by Q4.',
+    how:'Count of signed lease or purchase agreements for new station sites. Site must pass the evaluation framework (KR-3.11) criteria to count.',
+    source:'Real estate / legal · Signed agreements · Strategy pipeline tracker' },
+  { id:'KR-3.5', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'Station Launch Playbook',
+    what:'A standardized playbook covering pre-open, launch, and ramp-up phases for new stations. Piloted on 2+ stations by Q2; adopted as the standard for all new openings by Q4.',
+    how:'Two-stage: (1) Pilot complete when playbook is used end-to-end at 2 stations and a lessons-learned review is documented. (2) Adopted when it is the required process for all subsequent launches.',
+    source:'Strategy team · Station managers · Ops leadership sign-off' },
+  { id:'KR-3.7', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'Expansion Market Analysis — Top 10',
+    what:'A prioritized analysis of the top 10 target markets for Last Mile expansion, including delivery density, DSP presence, competitive landscape, and financial entry criteria.',
+    how:'Count of markets with a completed analysis scorecard. Each market must include: delivery density data, DSP footprint map, margin estimate, and recommended entry sequencing.',
+    source:'Strategy team · Market data · Finance · DSP network data' },
+  { id:'KR-3.8', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'H2 Expansion Recommendation to Leadership',
+    what:'A formal go/no-go recommendation presented to leadership for 3+ new markets in H2 2026, including financial case and entry sequencing. Decision accepted and actioned.',
+    how:'Binary: recommendation presented, leadership decision documented, and at least one market actioned (site search initiated or passed). Due Q3.',
+    source:'Strategy team · Finance · Leadership meeting record' },
+  { id:'KR-3.9', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'Amazon Relay Garage Integration Strategy',
+    what:'A defined strategy and active escalation path for integrating Kooner/Last Mile operations with the Amazon Relay Garage platform, including specs, timeline, and owner.',
+    how:'Binary: strategy document completed, escalation path defined with named contacts at Amazon, and first escalation initiated. Due Q2.',
+    source:'Strategy team · Amazon partnership team · Tech / integration owner' },
+  { id:'KR-3.10', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'Brick-and-Mortar Pilot Recommendation',
+    what:'A go/no-go recommendation on a brick-and-mortar service model pilot, including recommended markets, financial case, and operating model. Due Q2.',
+    how:'Binary: recommendation document completed and presented to leadership. Includes market selection rationale, P&L estimate, and decision outcome.',
+    source:'Strategy team · Finance · Leadership meeting record' },
+  { id:'KR-3.11', pillar:'Growth', color:'#7B3F00', pale:'#FFF2EC',
+    label:'Last Mile Site Evaluation Framework',
+    what:'A scored go/no-go framework for evaluating new station sites, covering delivery density, DSP presence, Amazon proximity, and market profitability thresholds.',
+    how:'Binary: framework doc complete and used in at least one real site evaluation decision. Due Q1.',
+    source:'Strategy team · Real estate · Finance · Ops leadership' },
+
+  // Customer
+  { id:'KR-4.1', pillar:'Customer', color:'#843C74', pale:'#F5E8F3',
+    label:'Customer Satisfaction Measurement Framework + NPS 50+',
+    what:'A live framework defining NPS methodology, survey cadence, and response protocols — with 50+ as the 2026 NPS target. Two components: (1) framework published, (2) NPS score ≥50.',
+    how:'Framework: binary, published and in use. NPS: <code>% Promoters − % Detractors</code> from standardized survey. Minimum sample size and cadence defined in framework.',
+    source:'Customer success team · Survey platform · Strategy team' },
+  { id:'KR-4.2', pillar:'Customer', color:'#843C74', pale:'#F5E8F3',
+    label:'Customer Health Scoring — Top 50 Accounts',
+    what:'A health score assigned to each of the top 50 accounts, tracking relationship strength, SLA performance, issue frequency, and revenue risk.',
+    how:'<code>Count of top 50 accounts with an active health score on file ÷ 50</code>. Score must include at least: SLA adherence %, open issues count, last contact date, and risk flag.',
+    source:'CRM · SLA data · Customer success team · Finance (revenue rank)' },
+  { id:'KR-4.4', pillar:'Customer', color:'#843C74', pale:'#F5E8F3',
+    label:'Proactive Delay Communication — 100% of Delays',
+    what:'Percentage of delivery delays where a proactive outbound communication is sent to the customer before they contact us.',
+    how:'<code>Delays with proactive outbound communication ÷ Total delays × 100</code>. "Proactive" means communication sent before customer inquiry is received. Tracked via CRM log and ops delay report.',
+    source:'FleetIQ delay flags · CRM outbound log · Ops team' },
+  { id:'KR-4.5', pillar:'Customer', color:'#843C74', pale:'#F5E8F3',
+    label:'Standardized Customer Onboarding Playbook',
+    what:'A complete onboarding playbook covering steps, timelines, handoffs, and success milestones for new Amazon and DSP customers. Binary: published and in active use.',
+    how:'Complete when playbook is approved, distributed to account management, and used in at least one live onboarding.',
+    source:'Customer success · Strategy team · Account management' },
+  { id:'KR-4.6', pillar:'Customer', color:'#843C74', pale:'#F5E8F3',
+    label:'3P Services Breakdown & Contract Optimization',
+    what:'A completed analysis of third-party service contracts with recommendations for term optimization, cost reduction, and SLA alignment. Binary: analysis complete and recommendations actioned.',
+    how:'Complete when all active 3P contracts are reviewed, a summary with recommendations is approved, and at least one renegotiation or term change is initiated.',
+    source:'Finance · Legal · Operations · Vendor contracts' },
+  { id:'KR-4.7', pillar:'Customer', color:'#843C74', pale:'#F5E8F3',
+    label:'Last Mile Customer Success Framework',
+    what:'A framework defining account health metrics, escalation protocols, and retention touchpoints for Amazon and DSP relationships. Binary: framework live and adopted.',
+    how:'Complete when framework doc is approved, account managers are trained on it, and it is referenced in the first quarterly account review.',
+    source:'Customer success team · Strategy team · Leadership sign-off' },
+  { id:'KR-4.8', pillar:'Customer', color:'#843C74', pale:'#F5E8F3',
+    label:'MSA & Service Agreement Standards',
+    what:'Defined standards for Last Mile Master Service Agreements and service contracts covering SLA terms, liability structure, and renewal protocols for Amazon and DSP relationships.',
+    how:'Binary: standards document approved by legal and leadership, and applied to all new and renewing agreements going forward.',
+    source:'Legal · Finance · Strategy team · Customer success' },
+
+  // Strategy
+  { id:'KR-5.1', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'Kooner/FleetIQ Performance Standards & KPIs',
+    what:'A published standards document defining the KPIs and performance thresholds that operations is held against for Kooner and FleetIQ usage in 2026. Binary: published and referenced in planning.',
+    how:'Complete when document is approved, distributed to all station managers and ops leadership, and incorporated into the Q1 planning review.',
+    source:'Strategy team · Ops leadership · FleetIQ account team' },
+  { id:'KR-5.2', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'Network Capacity Planning Model',
+    what:'A model enabling operations to project station-level staffing, fleet, and route capacity needs 90 days forward. Binary: model delivered and actively used in planning.',
+    how:'Complete when model is delivered, inputs are defined and owned, and it is used in at least one 90-day capacity planning cycle before Q2 close.',
+    source:'Strategy team · Ops data · FleetIQ · Finance headcount data' },
+  { id:'KR-5.3', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'Last Mile Coverage Gap Analysis',
+    what:'An analysis identifying underserved geographic zones relative to demand, with recommended station placement priorities. Binary: analysis delivered to leadership.',
+    how:'Complete when analysis covers all active markets, identifies at least 3 priority gap zones, and includes placement recommendations with supporting density data.',
+    source:'Strategy team · Delivery density data · Amazon zone data · Market data' },
+  { id:'KR-5.4', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'Quarterly Strategy Reviews — 4 of 4',
+    what:'Count of completed formal strategy reviews with ops leadership assessing performance against the 2026 framework and producing written recommendations.',
+    how:'<code>Count of completed quarterly reviews ÷ 4 planned reviews</code>. A review counts when: meeting occurred, OKR/KPI performance was reviewed, and a written output was distributed within 5 days.',
+    source:'Strategy team · Calendar · Written review outputs · Ops leadership attendance' },
+  { id:'KR-5.5', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'Real-Time Last Mile Strategy Scorecard',
+    what:'A live scorecard tracking performance against all 2026 strategic pillars, accessible to leadership at any time. This dashboard is the primary deliverable for this KR.',
+    how:'Binary: scorecard live by end of Q1, updating on defined cadence (weekly for ops KPIs, monthly for financial KPIs), and reviewed in at least one leadership session per quarter.',
+    source:'This dashboard · FleetIQ · Finance · Strategy team' },
+  { id:'KR-5.6', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'2027 Last Mile Strategy Plan',
+    what:'A complete strategy plan for 2027 including expansion targets, Kooner scaling roadmap, and ops performance standards. Binary: plan approved by leadership by Q4 close.',
+    how:'Complete when plan document is approved in a formal leadership review, expansion targets are adopted into 2027 planning, and Kooner roadmap is aligned with the product team.',
+    source:'Strategy team · Finance · Kooner product team · Leadership sign-off' },
+  { id:'KR-5.7', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'Market Profitability Entry Criteria',
+    what:'Defined thresholds and entry criteria that qualify a market for Last Mile expansion — including minimum delivery density, margin floor, and DSP presence — aligned with Finance.',
+    how:'Binary: criteria document approved by Finance and adopted as the standard filter for all expansion market evaluations (referenced in KR-3.7 and KR-3.11 processes).',
+    source:'Strategy team · Finance · Real estate · Market analysis data' },
+  { id:'KR-5.8', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'SRT Pricing Framework',
+    what:'The Standard Repair Time (SRT) pricing framework defining repair cost standards, time benchmarks by repair type, and the rollout methodology for ops to implement.',
+    how:'Binary: framework document delivered to ops leadership by end of Q1, with a defined rollout plan and owner for Q2 implementation.',
+    source:'Strategy team · Ops leadership · Finance · FleetIQ repair data' },
+  { id:'KR-5.9', pillar:'Strategy', color:'#1B5E6B', pale:'#E0F2F5',
+    label:'Last Mile Workforce Planning Model',
+    what:'A model defining technician headcount triggers by station type, route volume, and market size — enabling ops to plan hiring 60–90 days ahead.',
+    how:'Complete when model is delivered, tested against at least two station types, and used in one live headcount planning decision before Q3 close.',
+    source:'Strategy team · HR / payroll · FleetIQ route data · Station ops data' },
+];
+
+const pillarMeta = {
+  Financial:   { label:'💰 Financial Performance',  color:'#1F4E79' },
+  Operational: { label:'⚙️ Operational Excellence', color:'#375623' },
+  Growth:      { label:'📈 Growth & Expansion',     color:'#7B3F00' },
+  Customer:    { label:'💗 Customer Satisfaction',  color:'#843C74' },
+  Strategy:    { label:'🗺️ Strategy & Expansion',   color:'#1B5E6B' },
+};
+
+// ── Render Definitions tab ────────────────────────────────────────────────────
+const defsContainer = document.getElementById('defs-container');
+let lastPillar = '';
+krDefs.forEach(def => {
+  if (def.pillar !== lastPillar) {
+    lastPillar = def.pillar;
+    const hdr = document.createElement('div');
+    hdr.className = 'def-pillar-header';
+    hdr.innerHTML = `<h2 style="color:${def.color}">${pillarMeta[def.pillar].label}</h2><div class="def-pillar-header-line"></div>`;
+    defsContainer.appendChild(hdr);
+  }
+  const card = document.createElement('div');
+  card.className = 'def-card';
+  card.innerHTML = `
+    <div class="def-card-header" style="background:${def.pale}">
+      <span class="def-kr-id" style="color:${def.color}">${def.id}</span>
+      <span class="def-kr-title">${def.label}</span>
+    </div>
+    <div class="def-card-body">
+      <div class="def-cell">
+        <div class="def-cell-label">What it measures</div>
+        <div class="def-cell-text">${def.what}</div>
+      </div>
+      <div class="def-cell">
+        <div class="def-cell-label">How it's calculated</div>
+        <div class="def-cell-text">${def.how}</div>
+      </div>
+      <div class="def-cell">
+        <div class="def-cell-label">Data source</div>
+        <div class="def-cell-text">${def.source}</div>
+      </div>
+    </div>`;
+  defsContainer.appendChild(card);
+});
+
 </script>
 </body>
 </html>
